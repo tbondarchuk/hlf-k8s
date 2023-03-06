@@ -1,0 +1,48 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org0-orderer3-tls-cert
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-orderer3
+    app.kubernetes.io/part-of: org0
+spec:
+  isCA: false
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org0-orderer3-tls
+  dnsNames:
+    - localhost
+    - org0-orderer3
+    - org0-orderer3.org0.svc.cluster.local
+    - org0-orderer3.org0.localho.st
+    - org0-orderer3-admin.org0.localho.st
+  ipAddresses:
+    - 127.0.0.1
+  secretName: org0-orderer3-tls-cert
+  issuerRef:
+    name: org0-tls-cert-issuer
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org0-orderer3-msp-cert
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-orderer3
+    app.kubernetes.io/part-of: org0
+spec:
+  isCA: false
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org0-orderer3
+  subject:
+    organizationalUnits:
+      - orderer
+  secretName: org0-orderer3-msp-cert
+  issuerRef:
+    name: org0-cert-issuer

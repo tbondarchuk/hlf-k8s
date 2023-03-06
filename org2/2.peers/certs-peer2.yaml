@@ -1,0 +1,48 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org2-peer2-tls-cert
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-peer2
+    app.kubernetes.io/part-of: org2
+spec:
+  isCA: false
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org2-peer2-tls
+  dnsNames:
+    - localhost
+    - org2-peer2
+    - org2-peer2.org2.svc.cluster.local
+    - org2-peer2.org2.localho.st
+    - org2-gateway.org2.localho.st
+  ipAddresses:
+    - 127.0.0.1
+  secretName: org2-peer2-tls-cert
+  issuerRef:
+    name: org2-tls-cert-issuer
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org2-peer2-msp-cert
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-peer2
+    app.kubernetes.io/part-of: org2
+spec:
+  isCA: false
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org2-peer2
+  subject:
+    organizationalUnits:
+      - peer
+  secretName: org2-peer2-msp-cert
+  issuerRef:
+    name: org2-cert-issuer

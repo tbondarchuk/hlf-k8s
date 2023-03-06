@@ -1,0 +1,47 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: org2-root-cert-issuer
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-ca
+    app.kubernetes.io/part-of: org2
+spec:
+  selfSigned: {}
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org2-cert-issuer
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-ca
+    app.kubernetes.io/part-of: org2
+spec:
+  isCA: true
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org2-ca
+  secretName: org2-cert-issuer
+  issuerRef:
+    name: org2-root-cert-issuer
+    kind: Issuer
+    group: cert-manager.io
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: org2-cert-issuer
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-ca
+    app.kubernetes.io/part-of: org2
+spec:
+  ca:
+    secretName: org2-cert-issuer
+
+

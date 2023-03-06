@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: org2-peer2
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-peer2
+    app.kubernetes.io/part-of: org2
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: 60s
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: org2-peer2.org2.localho.st
+      http:
+        paths:
+          - backend:
+              service:
+                name: org2-peer2
+                port:
+                  name: grpc
+            path: /
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - org2-peer2.org2.localho.st

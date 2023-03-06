@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: org0-orderer3
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-orderer3
+    app.kubernetes.io/part-of: org0
+spec:
+  ports:
+    - name: general
+      port: 7050
+      protocol: TCP
+    - name: operations
+      port: 8443
+      protocol: TCP
+    - name: admin
+      port: 9443
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: org0-orderer3
+    app.kubernetes.io/part-of: org0

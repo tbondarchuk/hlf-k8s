@@ -1,0 +1,47 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: org0-tls-root-cert-issuer
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-ca-tls
+    app.kubernetes.io/part-of: org0
+spec:
+  selfSigned: {}
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org0-tls-cert-issuer
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-ca-tls
+    app.kubernetes.io/part-of: org0
+spec:
+  isCA: true
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org0-tls-ca
+  secretName: org0-tls-cert-issuer
+  issuerRef:
+    name: org0-tls-root-cert-issuer
+    kind: Issuer
+    group: cert-manager.io
+
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: org0-tls-cert-issuer
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-ca-tls
+    app.kubernetes.io/part-of: org0
+spec:
+  ca:
+    secretName: org0-tls-cert-issuer
+
+

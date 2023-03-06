@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: org2-nodeou
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-nodeou
+    app.kubernetes.io/part-of: org2
+data:
+  config.yaml: |
+    NodeOUs:
+      Enable: true
+      ClientOUIdentifier:
+        Certificate: cacerts/cacert.pem
+        OrganizationalUnitIdentifier: client
+      PeerOUIdentifier:
+        Certificate: cacerts/cacert.pem
+        OrganizationalUnitIdentifier: peer
+      AdminOUIdentifier:
+        Certificate: cacerts/cacert.pem
+        OrganizationalUnitIdentifier: admin
+      OrdererOUIdentifier:
+        Certificate: cacerts/cacert.pem
+        OrganizationalUnitIdentifier: orderer

@@ -1,0 +1,21 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: org0-admin-cert
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-admin-cert
+    app.kubernetes.io/part-of: org0
+spec:
+  isCA: false
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  commonName: org0-admin
+  subject:
+    organizationalUnits:
+      - admin
+  secretName: org0-admin-cert
+  issuerRef:
+    name: org0-cert-issuer

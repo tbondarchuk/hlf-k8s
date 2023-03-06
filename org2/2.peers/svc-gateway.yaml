@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: org2-gateway
+  namespace: org2
+  labels:
+    app.kubernetes.io/name: org2-gateway
+    app.kubernetes.io/part-of: org2
+spec:
+  ports:
+    - name: grpc
+      port: 7051
+      protocol: TCP
+  selector:
+    app.kubernetes.io/part-of: org2

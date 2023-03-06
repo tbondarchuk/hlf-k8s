@@ -1,0 +1,40 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: org0-orderer3
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-orderer3
+    app.kubernetes.io/part-of: org0
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: 60s
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: org0-orderer3.org0.localho.st
+      http:
+        paths:
+          - backend:
+              service:
+                name: org0-orderer3
+                port:
+                  name: general
+            path: /
+            pathType: ImplementationSpecific
+    - host: org0-orderer3-admin.org0.localho.st
+      http:
+        paths:
+          - backend:
+              service:
+                name: org0-orderer3
+                port:
+                  name: admin
+            path: /
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - org0-orderer3.org0.localho.st
+    - hosts:
+        - org0-orderer3-admin.org0.localho.st

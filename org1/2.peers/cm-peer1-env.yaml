@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: org1-peer1-env
+  namespace: org1
+  labels:
+    app.kubernetes.io/name: org1-peer1-env
+    app.kubernetes.io/part-of: org1
+data:
+  CORE_PEER_ID: org1-peer1
+  CORE_PEER_CHAINCODEADDRESS: org1-peer1:7052
+  CORE_PEER_ADDRESS: org1-peer1:7051
+  CORE_PEER_GOSSIP_EXTERNALENDPOINT: org1-peer1.org1.svc.cluster.local:7051
+  CORE_PEER_GOSSIP_BOOTSTRAP: org1-peer2:7051

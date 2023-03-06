@@ -1,0 +1,101 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: org0-orderer2
+  namespace: org0
+  labels:
+    app.kubernetes.io/name: org0-orderer2
+    app.kubernetes.io/part-of: org0
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: org0-orderer2
+      app.kubernetes.io/part-of: org0
+  serviceName: org0-orderer2
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: orderer
+      labels:
+        app.kubernetes.io/name: org0-orderer2
+        app.kubernetes.io/part-of: org0
+    spec:
+      securityContext: {}
+      containers:
+        - name: orderer
+          securityContext: {}
+          image: hyperledger/fabric-orderer:2.4.9
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: org0-orderers-env
+          ports:
+            - name: general
+              containerPort: 7050
+              protocol: TCP
+            - name: operations
+              containerPort: 8443
+              protocol: TCP
+            - name: admin
+              containerPort: 9443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8443
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8443
+            initialDelaySeconds: 15
+          volumeMounts:
+            - name: data
+              mountPath: /data
+
+            - name: tls-cert
+              mountPath: /config/tls
+
+            - mountPath: /config/msp/signcerts/cert.pem
+              name: msp-cert
+              subPath: tls.crt
+            - mountPath: /config/msp/keystore/key.pem
+              name: msp-cert
+              subPath: tls.key
+            - mountPath: /config/msp/cacerts/cacert.pem
+              name: msp-cert
+              subPath: ca.crt
+
+            - mountPath: /config/msp/config.yaml
+              name: nodeou
+              subPath: config.yaml
+
+          resources: {}
+      volumes:
+        - name: nodeou
+          configMap:
+            name: org0-nodeou
+        - name: tls-cert
+          secret:
+            secretName: org0-orderer2-tls-cert
+        - name: msp-cert
+          secret:
+            secretName: org0-orderer2-msp-cert
+
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app.kubernetes.io/name: org0-orderer2
+          app.kubernetes.io/part-of: org0
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: '1Gi'
