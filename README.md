@@ -7,11 +7,13 @@ uses cert-manager for tls and ecert certificates
 ## kind cluster
 
 start: `./kind.sh`
+
 delete: `kind delete cluster`
 
 ## network
 
 start: `./network.sh`
+
 get admin MSPs: `./getmsp.sh`
 
 ## check
