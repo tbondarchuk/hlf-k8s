@@ -12,6 +12,7 @@ delete: `kind delete cluster`
 ## network
 
 start: `./network.sh`
+get admin MSPs: `./getmsp.sh`
 
 ## check
 
