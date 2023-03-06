@@ -39,3 +39,8 @@ osnadmin channel list \
   --client-cert     $PWD/data/org0/admin/signcerts/cert.pem \
   --client-key      $PWD/data/org0/admin/keystore/key.pem
 ```
+
+## channel
+
+1. get msps: `./getmsp.sh`
+2. create channel: `./channel.sh`
