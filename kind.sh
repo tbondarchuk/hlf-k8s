@@ -32,6 +32,8 @@ networking:
   apiServerPort: 8888
 EOF
 
+kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/v1.0.12/deployments/kubernetes/reloader.yaml
+
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
 
 sleep 5
