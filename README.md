@@ -44,3 +44,12 @@ osnadmin channel list \
 
 1. get msps: `./getmsp.sh`
 2. create channel: `./channel.sh`
+
+
+## chaincode
+
+Uses ghcr.io/hyperledgendary/full-stack-asset-transfer-guide/contracts/asset-transfer-typescript:c7a82342f9df07fe7d3fc1994a4b3fc317602e36 from https://github.com/hyperledgendary/full-stack-asset-transfer-guide/pkgs/container/full-stack-asset-transfer-guide%2Fcontracts%2Fasset-transfer-typescript now https://github.com/hyperledger/fabric-samples/tree/main/full-stack-asset-transfer-guide
+
+
+1. install: `./cc-install.sh`
+2. test: `./cc-test.sh`

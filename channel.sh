@@ -1,6 +1,6 @@
 #!/bin/bash
 
-configtxgen -profile TwoOrgsApplicationGenesis -channelID channel -outputBlock data/genesis_block.pb
+configtxgen -profile TwoOrgsApplicationGenesis -channelID mychannel -outputBlock data/genesis_block.pb
 
 # configtxgen -inspectBlock data/genesis_block.pb | tee data/genesis_block.json | jq
 
@@ -12,7 +12,7 @@ do
     --ca-file         $PWD/data/org0/admin/tlscacerts/cert.pem \
     --client-cert     $PWD/data/org0/admin/signcerts/cert.pem \
     --client-key      $PWD/data/org0/admin/keystore/key.pem \
-    --channelID       channel \
+    --channelID       mychannel \
     --config-block    data/genesis_block.pb
 done
 

@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ccaas-asset-transfer
+  namespace: org1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ccaas-asset-transfer
+  template:
+    metadata:
+      labels:
+        app: ccaas-asset-transfer
+    spec:
+      containers:
+        - name: main
+          image: ghcr.io/hyperledgendary/full-stack-asset-transfer-guide/contracts/asset-transfer-typescript:c7a82342f9df07fe7d3fc1994a4b3fc317602e36
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: CHAINCODE_SERVER_ADDRESS
+              value: 0.0.0.0:9999
+            # should use id from: peer lifecycle chaincode calculatepackageid
+            - name: CHAINCODE_ID
+              value: asset-transfer
+            - name: CORE_CHAINCODE_ID_NAME
+              value: asset-transfer
+          ports:
+            - containerPort: 9999
+          resources: {}
