@@ -6,6 +6,7 @@ configtxgen -profile TwoOrgsApplicationGenesis -channelID channel -outputBlock d
 
 for i in 1 2 3
 do
+  echo "join orderer ${i}"
   osnadmin channel join \
     --orderer-address org0-orderer${i}-admin.org0.localho.st:443 \
     --ca-file         $PWD/data/org0/admin/tlscacerts/cert.pem \
@@ -29,6 +30,7 @@ for org in 1 2
 do
   for peer in 1 2
     do
+      echo "join org-${org} peer-${peer}"
       export FABRIC_CFG_PATH=$PWD/data
       export CORE_PEER_ADDRESS=org${org}-peer${peer}.org${org}.localho.st:443
       export CORE_PEER_LOCALMSPID=Org${org}MSP
